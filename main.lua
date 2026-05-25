@@ -8,6 +8,12 @@ function love.load()
     player = Player() --instantiate here
     enemy = Enemy()
     listOfBullets = {} 
+
+    hits = 0
+    gameFont = love.graphics.newFont(36) -- make the shi bigger
+    love.graphics.setFont(gameFont)
+
+
 end
 
 function love:keypressed(key)
@@ -32,6 +38,8 @@ end
 function love.draw()
     player:draw()
     enemy:draw()
+
+    love.graphics.print("Hits: " .. hits, 10, 10)
     
 
     for i, everybullet in ipairs(listOfBullets) do

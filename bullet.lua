@@ -30,6 +30,7 @@ function Bullet:checkCollision(obj)
     and self_bottom > obj_top 
     and self_top < obj_bottom then
         self.dead = true
+        hits = hits + 1
     
         if obj.speed > 0 then
             obj.speed = obj.speed + 50

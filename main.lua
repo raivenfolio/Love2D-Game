@@ -18,7 +18,8 @@ function love.update(dt)
     player:update(dt)
     enemy:update(dt)
     
-    for i,everybullet in ipairs(listOfBullets) do
+    for i =#listOfBullets,1,-1 do
+        local everybullet = listOfBullets[i]
         everybullet:update(dt)
         everybullet:checkCollision(enemy) -- each bullet will check collision with the enemy
 

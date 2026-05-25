@@ -6,7 +6,20 @@ function Bullet:new(x, y)
     --should be moving vertical
     self.x = x
     self.y = y
-    self.speed = 700
+    --self.speed = 700
+    local angleSpeed = 800
+    local launcheAngle = math.rad(70) -- 70 degree to rad
+
+
+    --this will be the calc of initial x and y velo
+    self.vx = angleSpeed * math.cos(launcheAngle)
+
+    --to shoot down for vy
+    self.vy = angleSpeed * math.sin(launcheAngle) -- now this launches down hopefully, lol 
+
+    --get gravity to pull bullet back down towards postiive y
+    self.gravity = 1200
+
 
     --collision checking
     self.width = self.image:getWidth()
@@ -31,6 +44,10 @@ function Bullet:checkCollision(obj)
     and self_top < obj_bottom then
         self.dead = true
         hits = hits + 1
+
+        --trigger a shake kapag na hit
+        shakeDuration = 0.4
+        shakeMagnitude = 3
     
         if obj.speed > 0 then
             obj.speed = obj.speed + 50
@@ -42,11 +59,23 @@ function Bullet:checkCollision(obj)
 end
 
 function Bullet:update(dt)
-    self.y = self.y + self.speed * dt
+    --apply gravvity on the y velocity
+    self.vy = self.vy +(self.gravity * dt) --pababa
 
-    if self.y > love.graphics.getHeight() then
-        love.load() -- this restarts the game when we miss enemy
+    --upddte pos based sa current vel
+    self.x = self.x + (self.vx * dt) -- with gravity
+    self.y = self.y + (self.vy * dt) 
+
+
+    -- remove the bullets if itgoess of the screen
+    if self.y > love.graphics.getHeight() or self.x > love.graphics.getWidth()then
+        love.load() -- this will mark the bullet for removal when it goes off screen
     end
+
+--removed this to changed with the new changes above
+    --if self.y > love.graphics.getHeight() then
+    --    love.load() -- this restarts the game when we miss enemy
+    --end
 
     
 end

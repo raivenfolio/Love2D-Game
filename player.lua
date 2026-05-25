@@ -9,6 +9,15 @@ function Player:new()
     self.y = 20
     self.speed = 500
     self.width = self.image:getWidth()
+
+
+    function Player:keypressed(key)
+    --if space bar is pressed
+    if key == "space" then
+        --put new instance ng bullet inside ng listofbullet talbe
+        table.insert(listOfBullets, Bullet(self.x, self.y))
+        end
+    end
 end
 
 function Player:update(dt)

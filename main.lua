@@ -11,7 +11,7 @@ function love.load()
 end
 
 function love:keypressed(key)
-    player.keypressed(key) -- call the keypressed function inside the player class    
+    player:keypressed(key) -- call the keypressed function inside the player class    
 end 
 
 function love.update(dt)
@@ -20,8 +20,12 @@ function love.update(dt)
     
     for i,everybullet in ipairs(listOfBullets) do
         everybullet:update(dt)
-    end
-    
+        everybullet:checkCollision(enemy) -- each bullet will check collision with the enemy
+
+        if everybullet.dead then
+            table.remove(listOfBullets, i)
+        end
+    end 
 end
 
 function love.draw()
@@ -33,6 +37,4 @@ function love.draw()
         everybullet:draw()
     end
 
-
-    
 end
